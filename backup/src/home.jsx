@@ -25,7 +25,9 @@ const sampleStudents = [
   { id: '01241578B', name: 'CHIDIACK PRINCE REMIA', status: 'absent' },
   { id: '01241471B', name: 'DAKEY KELVIN KOJO', status: 'absent' },
   { id: '01242387B', name: 'DANSO ONEILL', status: 'absent' },
+  { id: '01242291B', name: 'DOGBE MILLICENT WOYRAM', status: 'absent' },
   { id: '01241793B', name: 'KWAKYE DERRICK', status: 'absent' },
+  { id: '01242431B', name: 'LARKAI HAZEL LARTELEY', status: 'absent' },
   { id: '01241423B', name: 'LARTEY RICHMOND', status: 'absent' },
   { id: '01241847B', name: 'MBIAH AMOS ADU', status: 'absent' },
   { id: '01242011B', name: 'MILLS IBRAHIM LANTEY', status: 'absent' },
@@ -37,24 +39,10 @@ const sampleStudents = [
 ];
 
 export default function Home() {
-  // FIXED: Always use sampleStudents as the source of truth for names
-  // localStorage is only for saving/loading attendance status, not for storing different names
   const [attendanceData, setAttendanceData] = useState(() => {
     try {
       const saved = localStorage.getItem('attendance_demo');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Merge saved statuses with sample students to ensure correct names
-        // This preserves the status from localStorage but uses the correct names from sampleStudents
-        const mergedData = sampleStudents.map(sampleStudent => {
-          const savedStudent = parsed.find(s => s.id === sampleStudent.id);
-          return savedStudent 
-            ? { ...sampleStudent, status: savedStudent.status }
-            : sampleStudent;
-        });
-        return mergedData;
-      }
-      return sampleStudents;
+      return saved ? JSON.parse(saved) : sampleStudents;
     } catch (e) {
       return sampleStudents;
     }
@@ -217,14 +205,13 @@ export default function Home() {
           <div className="date-info">
             <div className="current-date">{currentDate}</div>
             <select id="course-select" className="course-selector" value={course} onChange={e => setCourse(e.target.value)}>
-              <option value="ATU 204 - CREATIVE THINKING AND PRBLEM SOLVINING">ATU 204 -  CREATIVE THINKING AND PROBLEM SOLVING </option>
-              <option value="BCP 208 - PROGRAMMINNG WITH JAVA">BCP 208 - PROGRAMMING WITH JAVA</option>
-              <option value="BCP 204 - GRID COMPUTING">BCP 204 - GRID COMPUTING </option>
-              <option value="BCP 210 - DATA STRUCTURE AND ALGORITHM 1">BCP 210 - DATA STRUCTURE AND ALGORITHM 1</option>
-              <option value="PRJ 202 - ENTREPRENEUSHIP AND NEW VENTURE CREATION">PRJ 202 -ENTREPRENEUSHIP AND NEW VENTURE CREATION</option>
-              <option value="BCP 206 - EMERGING FRONTIERS IN TECHNOLOGY">BCP 206 - EMERGING FRONTIERS IN TECHNOLOGY </option>
-              <option value="BCP 206 - WEB DEVELOPMENT TECHNOLOGY 2">BCP 206 - WEB DEVELOPMENT TECHNOLOGY 1</option>
-              <option value="BCP 202 - DATABASE AND SYSTEM DESIGN ">BCP 202 - DATABASE AND SYSTEM DESIGN</option>
+              <option value="ATU 203 - LOGIC AND CRITICAL THINKING">ATU 203 - LOGIC AND CRITICAL THINKING </option>
+              <option value="BCP 201 - PROGRAMMING WITH C++ OOP">BCP 201 - PROGRAMMING WITH C++ OOP</option>
+              <option value="BCP 203 - COMPUTER ORGANISATION AND ARCHITECTURE">BCP 203 - COMPUTER ORGANISATION AND ARCHITECTURE </option>
+              <option value="BCP 205 - DATA COMMUNICATION AND COMPUTER NETWORK">BCP 205 - DATA COMMUNICATION AND COMPUTER NETWORK</option>
+              <option value="ATU 201 - INTRODUCTION TO PRINCIPLES OF ENTREPRENEUSHIP">ATU 201 - INTRODUCTION TO PRINCIPLES OF ENTREPRENEUSHIP</option>
+              <option value="ATU 209 - PRINCIPLES AND APPLICATION IN SUSTAINABILITY">ATU 209 - PRINCIPLES AND APPLICATION IN SUSTAINABILITY </option>
+              <option value="BCP 207 - WEB DEVELOPMENT TECHNOLOGY 1">BCP 207 - WEB DEVELOPMENT TECHNOLOGY 1</option>
             
             </select>
             <input 
